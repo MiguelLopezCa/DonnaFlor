@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Validar usuario y contrasenna
             if (usuario.equals("a") && contrasena.equals("a")) {
-                startActivity(new Intent(this, ProductosOfertados.class));
+                startActivity(new Intent(this, ProductosRes.class));
             } else {
                 if (!usuario.equals("a") && !contrasena.equals("a")) {
                     Toast.makeText(this, "El usuario y la contraseña no corresponden", Toast.LENGTH_LONG).show();

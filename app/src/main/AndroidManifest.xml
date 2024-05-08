@@ -13,6 +13,9 @@
         android:theme="@style/Theme.DonnaFlor"
         tools:targetApi="31">
         <activity
+            android:name=".ProductosRes"
+            android:exported="false" />
+        <activity
             android:name=".ProductosOfertados"
             android:exported="false" />
         <activity
