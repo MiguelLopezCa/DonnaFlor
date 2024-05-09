@@ -143,7 +143,7 @@ public class ProductosRes extends AppCompatActivity {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    arrayProductos.add(new Producto(cursor.getInt(0),cursor.getString(1),cursor.getDouble(2),cursor.getInt(3),cursor.getInt(4)));
+                    arrayProductos.add(new Producto(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getInt(3), cursor.getInt(4), 0));
                 }
                 generarLista();
             } else {

@@ -21,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
         editTextContra = findViewById(R.id.txtContra);
         btnIngresar = findViewById(R.id.btnIngresar);
 
+
+
+
+        //evento clic del boton ingresar
         btnIngresar.setOnClickListener(v -> {
 
             String usuario = editTextUsuario.getText().toString();
@@ -28,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Validar usuario y contrasenna
             if (usuario.equals("a") && contrasena.equals("a")) {
-                startActivity(new Intent(this, ProductosRes.class));
+                startActivity(new Intent(this, ProductosOfertados.class));
             } else {
                 if (!usuario.equals("a") && !contrasena.equals("a")) {
                     Toast.makeText(this, "El usuario y la contraseña no corresponden", Toast.LENGTH_LONG).show();

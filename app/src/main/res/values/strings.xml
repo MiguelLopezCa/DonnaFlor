@@ -13,6 +13,8 @@
     <string name="estado_producto">Estado del Producto </string>
     <string name="guardar_producto">Guardar Producto</string>
     <string name="regresar">Regresar</string>
+    <string name="agregarProductos">Agregar Productos</string>
+    <string name="Consultas">Consultar Productos</string>
 
 
     <string-array name="tipos_producto">

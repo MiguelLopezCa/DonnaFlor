@@ -8,16 +8,17 @@ public class Producto {
     private double precio;
     private int tipo; // 0 para platos, 1 para bebidas
     private int estado; // 0 para inactivo, 1 para activo
-
+    private int imagen;
     ///Constructor
 
 
-    public Producto(int id, String nombre, double precio, int tipo, int estado) {
+    public Producto(int id, String nombre, double precio, int tipo, int estado,int imagen) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         this.estado = estado;
+        this.imagen = imagen;
     }
 
     //metodos getter and setter
@@ -62,4 +63,13 @@ public class Producto {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    public Integer getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(Integer imagen) {
+        this.imagen = imagen;
+    }
+
 }
