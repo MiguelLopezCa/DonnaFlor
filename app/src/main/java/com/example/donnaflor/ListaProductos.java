@@ -3,6 +3,7 @@ package com.example.donnaflor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +36,15 @@ public class ListaProductos extends AppCompatActivity {
         rcvVista = findViewById(R.id.recyclerView);
         rcvVista.setLayoutManager(new LinearLayoutManager(this));
         rcvVista.setAdapter(new MyAdapter(alItems, getApplicationContext()));
-
+        MyAdapter adapter = new MyAdapter(alItems, getApplicationContext());
+        adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Aquí colocas el código que deseas ejecutar cuando se hace clic en un elemento del RecyclerView
+                Toast.makeText(getApplicationContext(), "Elemento en posición " + position + " clickeado", Toast.LENGTH_SHORT).show();
+            }
+        });
+        rcvVista.setAdapter(adapter);
     }
     private void consultarListaProductos(int tipoProducto) {
         try{
@@ -49,9 +58,15 @@ public class ListaProductos extends AppCompatActivity {
                     " WHERE TIPO = " + tipoProducto + " AND ESTADO = 1", null);
 
 
-            if(cursor!=null && cursor.getCount()>0){
-                while (cursor.moveToNext()){
-                    arrayProductos.add(new Producto(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getInt(3), cursor.getInt(4), R.drawable.bebidas));
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    int imagen;
+                    if (tipoProducto == 0) {
+                        imagen = R.drawable.platos; // Asigna la imagen de plato
+                    } else {
+                        imagen = R.drawable.bebidas; // Asigna la imagen de bebida
+                    }
+                    arrayProductos.add(new Producto(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getInt(3), cursor.getInt(4), imagen));
                 }
             }
             else{

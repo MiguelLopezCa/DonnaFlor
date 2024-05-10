@@ -2,6 +2,7 @@ package com.example.donnaflor;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,49 +11,53 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
-private List<Producto> listaItems;
-private Context context;
+    private List<Producto> listaItems;
+    private Context context;
+    private OnItemClickListener listener;
 
     public MyAdapter(List<Producto> listaItems, Context context) {
         this.listaItems = listaItems;
         this.context = context;
     }
 
-    public List<Producto> getListaItems() {
-        return listaItems;
-    }
-
-    public void setListaItems(List<Producto> listaItems) {
-        this.listaItems = listaItems;
-    }
-
-    public Context getContext() {
-        return context;
-    }
-
-    public void setContext(Context context) {
-        this.context = context;
-    }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //Inflación o haciendo visible el layout por cada registro
-        return new MyViewHolder(LayoutInflater.from(context).inflate(
-            R.layout.layout, parent,false));
-        //siemre va ser falso el boolean
+        // Inflar el layout para cada elemento de la lista
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout, parent, false);
+        return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-//Relación de elementos del layout con la lista
-        holder.txtNombre.setText(listaItems.get(position).getNombre());
-        holder.txtprecio.setText(String.valueOf(listaItems.get(position).getPrecio()));
-        holder.imgFoto.setImageResource(listaItems.get(position).getImagen());
+        // Asignar datos a las vistas del ViewHolder
+        Producto producto = listaItems.get(position);
+        holder.txtNombre.setText(producto.getNombre());
+        holder.txtprecio.setText(String.valueOf(producto.getPrecio()));
+        holder.imgFoto.setImageResource(producto.getImagen());
+
+        // Establecer el evento de clic para el elemento
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onItemClick(position);
+                }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return listaItems.size();
     }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
 }
+
