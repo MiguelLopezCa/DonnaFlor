@@ -15,6 +15,7 @@ import data_base.db_helper;
 public class ListaProductos extends AppCompatActivity {
     RecyclerView rcvVista;
     ArrayList<Producto> arrayProductos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class ListaProductos extends AppCompatActivity {
 
         // Recibir el valor del tipo de producto del intent
 
-       // -1 es un valor predeterminado en caso de que no se reciba el tipo correctamente
+        // -1 es un valor predeterminado en caso de que no se reciba el tipo correctamente
         int tipoDeProducto = getIntent().getIntExtra("TIPO_PRODUCTO", -1);
         consultarListaProductos(tipoDeProducto);
 
@@ -46,8 +47,9 @@ public class ListaProductos extends AppCompatActivity {
         });
         rcvVista.setAdapter(adapter);
     }
+
     private void consultarListaProductos(int tipoProducto) {
-        try{
+        try {
             //Conexión
             db_helper helper = new db_helper(this);
             //Objeto para leer los datos
@@ -68,14 +70,12 @@ public class ListaProductos extends AppCompatActivity {
                     }
                     arrayProductos.add(new Producto(cursor.getInt(0), cursor.getString(1), cursor.getDouble(2), cursor.getInt(3), cursor.getInt(4), imagen));
                 }
-            }
-            else{
-                Toast.makeText(this,"PRODUCTO INEXISTENTE",Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "PRODUCTO INEXISTENTE", Toast.LENGTH_LONG).show();
             }
 
-        }
-        catch (Exception ex){
-            Toast.makeText(this,"Error general " + ex.getMessage(),Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(this, "Error general " + ex.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 

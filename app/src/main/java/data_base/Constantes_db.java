@@ -21,14 +21,22 @@ public class Constantes_db {
     public static final String TABLA_VENTAS = "VENTAS";
     public static final String CREAR_TABLA_VENTAS = "CREATE TABLE " + TABLA_VENTAS + " (" +
             "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "FECHA TEXT)";
+
+    // Tabla intermedia para la relación muchos a muchos entre ventas y productos
+    public static final String TABLA_VENTAS_PRODUCTOS = "VENTAS_PRODUCTOS";
+    public static final String CREAR_TABLA_VENTAS_PRODUCTOS = "CREATE TABLE " + TABLA_VENTAS_PRODUCTOS + " (" +
+            "ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "VENTA_ID INTEGER," +
             "PRODUCTO_ID INTEGER," +
-            "FECHA TEXT," +
             "CANTIDAD INTEGER)";
 
     // Comandos para eliminar las tablas
     public static final String ELIMINAR_TABLA_PRODUCTOS = "DROP TABLE IF EXISTS " + TABLA_PRODUCTOS;
     public static final String ELIMINAR_TABLA_VENTAS = "DROP TABLE IF EXISTS " + TABLA_VENTAS;
+    public static final String ELIMINAR_TABLA_VENTAS_PRODUCTOS = "DROP TABLE IF EXISTS " + TABLA_VENTAS_PRODUCTOS;
 
 }
+
 
 

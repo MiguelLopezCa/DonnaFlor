@@ -26,8 +26,10 @@ public class db_helper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(Constantes_db.ELIMINAR_TABLA_VENTAS);
         sqLiteDatabase.execSQL(Constantes_db.ELIMINAR_TABLA_PRODUCTOS);
+        sqLiteDatabase.execSQL(Constantes_db.ELIMINAR_TABLA_VENTAS_PRODUCTOS);
 
         sqLiteDatabase.execSQL(Constantes_db.CREAR_TABLA_PRODUCTOS);
         sqLiteDatabase.execSQL(Constantes_db.CREAR_TABLA_VENTAS);
+        sqLiteDatabase.execSQL(Constantes_db.CREAR_TABLA_VENTAS_PRODUCTOS);
     }
 }
