@@ -7,42 +7,45 @@
         android:id="@+id/imgFoto"
         android:layout_width="55dp"
         android:layout_height="55dp"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"/>
-
-    <TextView
-        android:layout_marginTop="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtNombre"
-        android:layout_toEndOf="@+id/imgFoto"
-        android:textColor="@color/black"
-        android:hint="Nombre"
-        android:textSize="20sp"/>
-
-    <TextView
-        android:id="@+id/txtprecio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtNombre"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="2dp"
-        android:layout_toEndOf="@id/imgFoto"
-        android:hint="@string/precio_producto"
-        android:textSize="15sp" />
+        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true" />
 
-    <TextView
-        android:id="@+id/txtCantidadSeleccionada"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtNombre"
-        android:layout_marginStart="-411dp"
-        android:layout_marginTop="26dp"
-        android:layout_toEndOf="@id/txtCantidadSeleccionada"
-        android:hint="cantidad"
-        android:textSize="15sp"/>
+        android:layout_toEndOf="@+id/imgFoto"
+        android:orientation="vertical">
 
-   /
+        <TextView
+            android:id="@+id/txtNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:hint="Nombre" />
+
+        <TextView
+            android:id="@+id/txtprecio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:hint="@string/precio_producto" />
+
+        <TextView
+            android:id="@+id/txtCantidadSeleccionada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:hint="cantidad" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/imgFoto"
+        android:layout_marginTop="10dp"
+        android:background="@color/black" />
 
 </RelativeLayout>

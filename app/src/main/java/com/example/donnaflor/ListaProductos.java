@@ -1,5 +1,6 @@
 package com.example.donnaflor;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import data_base.db_helper;
 public class ListaProductos extends AppCompatActivity {
     RecyclerView rcvVista;
     ArrayList<Producto> arrayProductos;
+    MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,8 @@ public class ListaProductos extends AppCompatActivity {
         setContentView(R.layout.activity_lista_productos);
         arrayProductos = new ArrayList<>();
 
+        // Reiniciar los contadores a 0 antes de cargar la lista de productos
+        reiniciarCantidadesSeleccionadas();
         // Recibir el valor del tipo de producto del intent
 
         // -1 es un valor predeterminado en caso de que no se reciba el tipo correctamente
@@ -45,19 +48,20 @@ public class ListaProductos extends AppCompatActivity {
         //Activación de reyclerview y asignación del adapter
         rcvVista = findViewById(R.id.recyclerView);
         rcvVista.setLayoutManager(new LinearLayoutManager(this));
-        rcvVista.setAdapter(new MyAdapter(alItems, getApplicationContext()));
-        MyAdapter adapter = new MyAdapter(alItems, getApplicationContext());
+        adapter = new MyAdapter(alItems, getApplicationContext());
+        rcvVista.setAdapter(adapter);
+
         adapter.setOnItemClickListener(new MyAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 // Aquí colocas el código que deseas ejecutar cuando se hace clic en un elemento del RecyclerView
             }
         });
-        rcvVista.setAdapter(adapter);
 
         // Configuración del botón flotante
         FloatingActionButton floatButton = findViewById(R.id.btnFloatRegistrar);
         floatButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onClick(View view) {
                 // Aquí colocas el código que deseas ejecutar cuando se hace clic en el FloatingActionButton
@@ -65,20 +69,13 @@ public class ListaProductos extends AppCompatActivity {
 
                 // Llamar al método registrarVenta() pasando la lista de productos seleccionados
                 registrarVenta(productosSeleccionados);
+                reiniciarCantidadesSeleccionadas();
+                adapter.notifyDataSetChanged();
+
             }
         });
-
-
     }
-    private List<Producto> obtenerProductosSeleccionados() {
-        List<Producto> productosSeleccionados = new ArrayList<>();
-        for (Producto producto : arrayProductos) {
-            if (producto.getCantidadSeleccionada() > 0) {
-                productosSeleccionados.add(producto);
-            }
-        }
-        return productosSeleccionados;
-    }
+
     private void consultarListaProductos(int tipoProducto) {
         try {
             //Conexión
@@ -109,6 +106,7 @@ public class ListaProductos extends AppCompatActivity {
             Toast.makeText(this, "Error general " + ex.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
     private void registrarVenta(List<Producto> productos) {
         try {
             // Obtener la fecha actual
@@ -131,32 +129,32 @@ public class ListaProductos extends AppCompatActivity {
                 long idVenta = database.insert(Constantes_db.TABLA_VENTAS, null, valuesVenta);
                 if (idVenta != -1) {
                     // Éxito al insertar la venta
-                    Toast.makeText(this, "Venta registrada correctamente", Toast.LENGTH_SHORT).show();
 
-                    // Recorrer la lista de productos y registrar la venta de cada producto
+                    // Recorrer la lista de productos y registrar la venta de cada producto en la tabla ventaProducto
                     for (Producto producto : productos) {
                         long idProducto = producto.getId(); // Obtener el ID del producto
                         int cantidad = producto.getCantidadSeleccionada(); // Obtener la cantidad seleccionada
 
                         // Crear un ContentValues para almacenar los datos de la venta de productos
-                        ContentValues valuesVentaProductos = new ContentValues();
-                        valuesVentaProductos.put("VENTA_ID", idVenta); // ID de la venta
-                        valuesVentaProductos.put("PRODUCTO_ID", idProducto); // ID del producto
-                        valuesVentaProductos.put("CANTIDAD", cantidad); // Cantidad vendida
+                        ContentValues valuesVentaProducto = new ContentValues();
+                        valuesVentaProducto.put("VENTA_ID", idVenta); // ID de la venta
+                        valuesVentaProducto.put("PRODUCTO_ID", idProducto); // ID del producto
+                        valuesVentaProducto.put("CANTIDAD", cantidad); // Cantidad vendida
 
-                        // Insertar la venta de productos en la tabla de ventas_productos
-                        long idVentaProductos = database.insert(Constantes_db.TABLA_VENTAS_PRODUCTOS, null, valuesVentaProductos);
-                        if (idVentaProductos != -1) {
-                            // Éxito al insertar la venta de productos
-                            Toast.makeText(this, "Venta de productos registrada correctamente", Toast.LENGTH_SHORT).show();
-                        } else {
+                        // Insertar la venta de productos en la tabla ventaProducto
+                        long idVentaProducto = database.insert(Constantes_db.TABLA_VENTAS_PRODUCTOS, null, valuesVentaProducto);
+                        if (idVentaProducto == -1) {
                             // Error al insertar la venta de productos
                             Toast.makeText(this, "Error al registrar la venta de productos", Toast.LENGTH_SHORT).show();
+                            // Cancelar la transacción y salir del método
+                            database.endTransaction();
+                            return;
                         }
                     }
 
                     // Establecer la transacción como exitosa
                     database.setTransactionSuccessful();
+                    Toast.makeText(this, "Venta registrada correctamente", Toast.LENGTH_SHORT).show();
                 } else {
                     // Error al insertar la venta
                     Toast.makeText(this, "Error al registrar la venta", Toast.LENGTH_SHORT).show();
@@ -173,5 +171,21 @@ public class ListaProductos extends AppCompatActivity {
         }
     }
 
+    // Método para obtener la lista de productos seleccionados
+    private List<Producto> obtenerProductosSeleccionados() {
+        List<Producto> productosSeleccionados = new ArrayList<>();
+        for (Producto producto : arrayProductos) {
+            if (producto.getCantidadSeleccionada() > 0) {
+                productosSeleccionados.add(producto);
+            }
+        }
+        return productosSeleccionados;
+    }
 
+    // Método para reiniciar todas las cantidades seleccionadas a cero
+    private void reiniciarCantidadesSeleccionadas() {
+        for (Producto producto : arrayProductos) {
+            producto.setCantidadSeleccionada(0); // Reiniciar la cantidad seleccionada
+        }
+    }
 }

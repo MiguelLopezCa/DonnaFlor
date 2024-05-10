@@ -52,9 +52,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyViewHolder> {
                 int clickedPosition = holder.getAdapterPosition(); // Obtener la posición actual del elemento
                 if (listener != null) {
                     listener.onItemClick(clickedPosition);
-                    int nuevaCantidad = cantidadesSeleccionadas.get(clickedPosition) + 1; // Incrementar el contador
-                    cantidadesSeleccionadas.set(clickedPosition, nuevaCantidad); // Actualizar el contador en la lista
-                    notifyDataSetChanged(); // Notificar al adaptador que los datos han cambiado
+
+                    // Incrementar el contador del producto seleccionado
+                    Producto selectedProduct = listaItems.get(clickedPosition);
+                    int newQuantity = selectedProduct.getCantidadSeleccionada() + 1;
+                    selectedProduct.setCantidadSeleccionada(newQuantity);
+
+                    // Notificar al RecyclerView que los datos han cambiado
+                    notifyDataSetChanged();
                 }
             }
         });

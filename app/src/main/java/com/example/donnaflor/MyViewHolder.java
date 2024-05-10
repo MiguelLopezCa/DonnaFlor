@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class MyViewHolder extends RecyclerView.ViewHolder {
 
-    TextView txtNombre, txtprecio;
+    TextView txtNombre, txtprecio,txtCantidadSeleccionada;
     ImageView imgFoto;
     public MyViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -18,5 +18,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         txtNombre = itemView.findViewById(R.id.txtNombre);
         txtprecio = itemView.findViewById(R.id.txtprecio);
         imgFoto = itemView.findViewById(R.id.imgFoto);
+        txtCantidadSeleccionada = itemView.findViewById(R.id.txtCantidadSeleccionada); // Inicializa el campo txtCantidadSeleccionada
+
     }
 }
