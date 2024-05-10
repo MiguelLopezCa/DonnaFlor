@@ -6,23 +6,22 @@ public class Producto {
     private int id;
     private String nombre;
     private double precio;
-    private int tipo; // 0 para platos, 1 para bebidas
-    private int estado; // 0 para inactivo, 1 para activo
+    private int tipo;
+    private int estado;
     private int imagen;
-    ///Constructor
+    private int cantidadSeleccionada; // Nuevo campo para la cantidad seleccionada
 
-
-    public Producto(int id, String nombre, double precio, int tipo, int estado,int imagen) {
+    public Producto(int id, String nombre, double precio, int tipo, int estado, int imagen) {
         this.id = id;
         this.nombre = nombre;
         this.precio = precio;
         this.tipo = tipo;
         this.estado = estado;
         this.imagen = imagen;
+        this.cantidadSeleccionada = 0; // Inicializar la cantidad seleccionada en 0
     }
 
-    //metodos getter and setter
-
+    // Getters y setters para todos los campos
 
     public int getId() {
         return id;
@@ -64,12 +63,19 @@ public class Producto {
         this.estado = estado;
     }
 
-    public Integer getImagen() {
+    public int getImagen() {
         return imagen;
     }
 
-    public void setImagen(Integer imagen) {
+    public void setImagen(int imagen) {
         this.imagen = imagen;
     }
 
+    public int getCantidadSeleccionada() {
+        return cantidadSeleccionada;
+    }
+
+    public void setCantidadSeleccionada(int cantidadSeleccionada) {
+        this.cantidadSeleccionada = cantidadSeleccionada;
+    }
 }

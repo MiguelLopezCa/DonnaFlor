@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<ImageView
-    android:layout_marginTop="15dp"
-    android:id="@+id/imgFoto"
-    android:layout_width="55dp"
-    android:layout_height="55dp"
-    android:layout_marginRight="10dp"
-    android:layout_centerVertical="true"></ImageView>
+
+    <ImageView
+        android:id="@+id/imgFoto"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"/>
 
     <TextView
         android:layout_marginTop="15dp"
@@ -18,23 +19,30 @@
         android:layout_toEndOf="@+id/imgFoto"
         android:textColor="@color/black"
         android:hint="Nombre"
-        android:textSize="20sp"></TextView>
+        android:textSize="20sp"/>
 
     <TextView
+        android:id="@+id/txtprecio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtprecio"
-        android:hint="@string/precio_producto"
-        android:layout_toEndOf="@id/imgFoto"
         android:layout_below="@id/txtNombre"
-        android:textSize="15sp"
-        ></TextView>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="2dp"
+        android:layout_toEndOf="@id/imgFoto"
+        android:hint="@string/precio_producto"
+        android:textSize="15sp" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/txtCantidadSeleccionada"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        android:layout_below="@+id/imgFoto"
-        android:layout_marginTop="10dp"></LinearLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtNombre"
+        android:layout_marginStart="-411dp"
+        android:layout_marginTop="26dp"
+        android:layout_toEndOf="@id/txtCantidadSeleccionada"
+        android:hint="cantidad"
+        android:textSize="15sp"/>
+
+   /
 
 </RelativeLayout>
